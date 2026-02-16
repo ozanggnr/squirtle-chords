@@ -7,15 +7,6 @@ import { User, Calendar, Music, Type, ChevronUp, ChevronDown, ArrowLeft } from '
 import Link from 'next/link';
 import { ChordTransposer } from '@/utils/chordTransposer';
 
-// Enable dynamic params for client-side rendering
-export const dynamicParams = true;
-
-// Required for static export - return empty array to generate client-side only
-export async function generateStaticParams() {
-    return [];
-}
-
-
 interface Song {
     _id: string;
     title: string;
