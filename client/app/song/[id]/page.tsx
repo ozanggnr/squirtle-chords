@@ -7,6 +7,15 @@ import { User, Calendar, Music, Type, ChevronUp, ChevronDown, ArrowLeft } from '
 import Link from 'next/link';
 import { ChordTransposer } from '@/utils/chordTransposer';
 
+// Enable dynamic params for client-side rendering
+export const dynamicParams = true;
+
+// Required for static export - return empty array to generate client-side only
+export async function generateStaticParams() {
+    return [];
+}
+
+
 interface Song {
     _id: string;
     title: string;
@@ -90,8 +99,8 @@ export default function SongDetail() {
                 <div
                     key={index}
                     className={`font-mono text-sm md:text-base leading-relaxed ${isChordLine
-                            ? 'text-blue-400 font-bold tracking-wide'
-                            : 'text-gray-300'
+                        ? 'text-blue-400 font-bold tracking-wide'
+                        : 'text-gray-300'
                         }`}
                 >
                     {line || '\u00A0'}
