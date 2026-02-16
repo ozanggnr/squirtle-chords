@@ -1,5 +1,6 @@
+const mongoose = require('mongoose');
 const axios = require('axios');
-const Song = require('../models/Song');
+const Song = require('./models/Song');
 require('dotenv').config();
 
 /**
