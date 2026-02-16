@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
-import { Search, Music2, Guitar, ArrowRight } from 'lucide-react';
+import { Music, Guitar, Sparkles, TrendingUp, Clock, Users } from 'lucide-react';
 import API_URL from '@/config/api';
 
 interface Song {
@@ -44,91 +44,149 @@ function HomePage() {
         fetchSongs();
     }, [search, language]);
 
+    const stats = [
+        { icon: Music, label: 'Total Songs', value: songs.length.toString(), color: 'text-blue-400' },
+        { icon: TrendingUp, label: 'Popular', value: '12', color: 'text-green-400' },
+        { icon: Clock, label: 'Recent', value: '24h', color: 'text-purple-400' },
+    ];
+
     return (
         <div className="min-h-screen">
-            {/* Hero Section */}
-            <div className="bg-gradient-to-b from-gray-900 via-gray-900 to-black border-b border-gray-800">
-                <div className="max-w-6xl mx-auto px-6 py-16">
-                    <div className="text-center space-y-4">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-4">
-                            <Music2 size={20} className="text-blue-400" />
-                            <span className="text-blue-400 text-sm font-medium">Guitar Chords & Tabs</span>
+            {/* Hero Section with Gradient */}
+            <section className="relative overflow-hidden border-b border-border">
+                {/* Background Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                    <div className="text-center max-w-3xl mx-auto space-y-6">
+                        {/* Badge */}
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass animate-fade-in">
+                            <Sparkles className="w-4 h-4 text-primary" />
+                            <span className="text-sm font-medium text-muted-foreground">
+                                Guitar Chords & Tabs Library
+                            </span>
                         </div>
 
-                        <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">
-                            {search ? `"${search}"` : language ? `${language} Songs` : 'Discover Songs'}
+                        {/* Heading */}
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight animate-fade-in">
+                            <span className="bg-gradient-to-r from-foreground via-foreground/90 to-foreground/60 bg-clip-text text-transparent">
+                                {search ? `Results for "${search}"` : language ? `${language} Songs` : 'Discover Amazing Songs'}
+                            </span>
                         </h1>
 
-                        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                            {loading ? 'Loading...' : `${songs.length} songs available`}
+                        {/* Description */}
+                        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
+                            {loading ? 'Loading your music collection...' : `Browse ${songs.length} chord charts and tabs`}
                         </p>
                     </div>
+
+                    {/* Stats */}
+                    <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                        {stats.map((stat, index) => (
+                            <div
+                                key={stat.label}
+                                className="glass rounded-xl p-4 sm:p-6 text-center transition-all hover:scale-105 hover:glow animate-fade-in"
+                                style={{ animationDelay: `${index * 100}ms` }}
+                            >
+                                <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
+                                <div className="text-2xl sm:text-3xl font-bold mb-1">{stat.value}</div>
+                                <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </section>
 
             {/* Songs Grid */}
-            <div className="max-w-6xl mx-auto px-6 py-12">
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
                 {loading ? (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="h-32 bg-gray-900 border border-gray-800 rounded-lg animate-pulse" />
+                            <div
+                                key={i}
+                                className="h-40 rounded-xl glass animate-pulse"
+                                style={{ animationDelay: `${i * 50}ms` }}
+                            />
                         ))}
                     </div>
                 ) : songs.length > 0 ? (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {songs.map((song) => (
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        {songs.map((song, index) => (
                             <Link
                                 key={song._id}
                                 href={`/song/${song._id}`}
-                                className="group relative bg-gray-900 border border-gray-800 hover:border-blue-500/50 rounded-lg p-5 transition-all hover:shadow-lg hover:shadow-blue-500/10"
+                                className="group relative glass rounded-xl p-6 transition-all hover:scale-[1.02] hover:glow animate-fade-in"
+                                style={{ animationDelay: `${index * 50}ms` }}
                             >
-                                <div className="flex items-start justify-between gap-4">
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors truncate mb-1">
-                                            {song.title}
-                                        </h3>
-                                        <p className="text-sm text-gray-500 truncate mb-3">
-                                            {song.artist}
-                                        </p>
-
-                                        <div className="flex items-center gap-2 text-xs text-gray-600">
-                                            <span className="px-2 py-1 bg-gray-800 rounded">{song.language}</span>
-                                            <span className="px-2 py-1 bg-gray-800 rounded">{song.type}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-shrink-0 mt-1">
+                                {/* Icon Badge */}
+                                <div className="absolute top-4 right-4">
+                                    <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 transition-all group-hover:bg-primary/20">
                                         {song.type === 'Chords' ? (
-                                            <Guitar size={20} className="text-gray-600 group-hover:text-blue-400 transition-colors" />
+                                            <Guitar className="w-4 h-4 text-primary" />
                                         ) : (
-                                            <Music2 size={20} className="text-gray-600 group-hover:text-purple-400 transition-colors" />
+                                            <Music className="w-4 h-4 text-purple-400" />
                                         )}
                                     </div>
                                 </div>
 
-                                <ArrowRight size={16} className="absolute bottom-5 right-5 text-gray-700 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+                                {/* Content */}
+                                <div className="space-y-3 pr-12">
+                                    <h3 className="text-lg font-semibold truncate group-hover:text-primary transition-colors">
+                                        {song.title}
+                                    </h3>
+
+                                    <p className="text-sm text-muted-foreground truncate">
+                                        {song.artist}
+                                    </p>
+
+                                    {/* Tags */}
+                                    <div className="flex gap-2">
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground">
+                                            {song.language}
+                                        </span>
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground">
+                                            {song.type}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Hover Indicator */}
+                                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </Link>
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-24">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-900 border border-gray-800 rounded-full mb-4">
-                            <Search size={32} className="text-gray-600" />
+                    <div className="text-center py-24 space-y-4 animate-fade-in">
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full glass flex items-center justify-center">
+                            <Music className="w-8 h-8 text-muted-foreground" />
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">No songs found</h3>
-                        <p className="text-gray-500">
-                            {search || language ? 'Try adjusting your search' : 'Database is empty. Run seeder to add sample songs.'}
+                        <h3 className="text-2xl font-semibold">No songs found</h3>
+                        <p className="text-muted-foreground max-w-md mx-auto">
+                            {search || language
+                                ? 'Try adjusting your search or browse all songs'
+                                : 'Database is empty. Add songs to get started.'}
                         </p>
                     </div>
                 )}
-            </div>
+            </section>
         </div>
     );
 }
 
 export default function Home() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-pulse text-muted-foreground">Loading...</div>
+            </div>
+        }>
             <HomePage />
         </Suspense>
     );
