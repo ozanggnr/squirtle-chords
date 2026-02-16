@@ -24,7 +24,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
                         : undefined
                 }
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                {...props}
+                {...(props as any)}
             >
                 {children}
             </motion.div>

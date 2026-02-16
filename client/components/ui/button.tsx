@@ -47,7 +47,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                {...props}
+                {...(props as any)}
             >
                 {loading && <Loader className="animate-spin" size={18} />}
                 {children}
