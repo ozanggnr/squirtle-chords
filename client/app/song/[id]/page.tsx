@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { User, Calendar, Music, Type, ChevronUp, ChevronDown, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { ChordTransposer } from '@/utils/chordTransposer';
+import API_URL from '@/config/api';
 
 interface Song {
     _id: string;
@@ -32,7 +33,7 @@ export default function SongDetail() {
     useEffect(() => {
         const fetchSong = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/songs/${id}`);
+                const res = await axios.get(`${API_URL}/api/songs/${id}`);
                 setSong(res.data);
                 setDisplayContent(res.data.content);
             } catch (error) {

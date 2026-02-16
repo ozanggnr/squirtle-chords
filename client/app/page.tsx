@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import { PlayCircle, Mic2, Guitar, Sparkles } from 'lucide-react';
 import Mascot from '@/components/Mascot';
+import API_URL from '@/config/api';
 
 interface Song {
     _id: string;
@@ -28,7 +29,7 @@ function HomePage() {
         const fetchSongs = async () => {
             setLoading(true);
             try {
-                let url = 'http://localhost:5000/api/songs';
+                let url = `${API_URL}/api/songs`;
                 const params = new URLSearchParams();
                 if (search) params.append('search', search);
                 if (language) params.append('language', language);

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Mail, Lock, User, AlertCircle } from 'lucide-react';
+import API_URL from '@/config/api';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ export default function Register() {
         setError('');
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const res = await axios.post(`${API_URL}/api/auth/register`, formData);
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user', JSON.stringify(res.data));

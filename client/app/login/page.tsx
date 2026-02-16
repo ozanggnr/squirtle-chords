@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
+import API_URL from '@/config/api';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ export default function Login() {
         setError('');
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const res = await axios.post(`${API_URL}/api/auth/login`, formData);
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user', JSON.stringify(res.data));

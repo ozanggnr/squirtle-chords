@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Upload, FileText, AlertCircle, Loader } from 'lucide-react';
+import API_URL from '@/config/api';
 
 export default function UploadPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -74,7 +75,7 @@ export default function UploadPage() {
             const formData = new FormData();
             formData.append('document', file);
 
-            const response = await axios.post('http://localhost:5000/api/upload', formData, {
+            const response = await axios.post(`${API_URL}/api/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
@@ -106,8 +107,8 @@ export default function UploadPage() {
 
             <div
                 className={`relative border-2 border-dashed rounded-xl p-12 text-center transition-all ${dragActive
-                        ? 'border-blue-500 bg-blue-500/10'
-                        : 'border-gray-700 bg-gray-900/30 hover:border-gray-600'
+                    ? 'border-blue-500 bg-blue-500/10'
+                    : 'border-gray-700 bg-gray-900/30 hover:border-gray-600'
                     }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Save, ArrowLeft, Music, User as UserIcon, Globe, AlertCircle } from 'lucide-react';
+import API_URL from '@/config/api';
 
 interface ParsedSong {
     title: string;
@@ -63,7 +64,7 @@ export default function CreateSongPage() {
                 return;
             }
 
-            await axios.post('http://localhost:5000/api/songs', {
+            await axios.post(`${API_URL}/api/songs`, {
                 title: formData.title,
                 artist: formData.artist,
                 language,
