@@ -9,53 +9,28 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
-                border: "hsl(var(--border))",
+                background: "rgb(8, 8, 11)",
+                foreground: "rgb(248, 250, 252)",
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))",
+                    DEFAULT: "rgb(59, 130, 246)",
+                    foreground: "rgb(15, 23, 42)",
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
-                },
-                accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                    foreground: "hsl(var(--accent-foreground))",
+                    DEFAULT: "rgb(30, 41, 59)",
+                    foreground: "rgb(248, 250, 252)",
                 },
                 muted: {
-                    DEFAULT: "hsl(var(--muted))",
-                    foreground: "hsl(var(--muted-foreground))",
+                    DEFAULT: "rgb(30, 41, 59)",
+                    foreground: "rgb(148, 163, 184)",
                 },
-                card: {
-                    DEFAULT: "hsl(var(--card))",
-                    foreground: "hsl(var(--card-foreground))",
-                },
+                accent: "rgb(30, 41, 59)",
+                border: "rgb(30, 41, 59)",
+                card: "rgb(15, 23, 42)",
             },
             borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
-            },
-            keyframes: {
-                "fade-in": {
-                    "0%": { opacity: "0", transform: "translateY(10px)" },
-                    "100%": { opacity: "1", transform: "translateY(0)" },
-                },
-                "slide-in": {
-                    "0%": { transform: "translateX(-100%)" },
-                    "100%": { transform: "translateX(0)" },
-                },
-                shimmer: {
-                    "0%": { backgroundPosition: "-1000px 0" },
-                    "100%": { backgroundPosition: "1000px 0" },
-                },
-            },
-            animation: {
-                "fade-in": "fade-in 0.5s ease-out",
-                "slide-in": "slide-in 0.3s ease-out",
-                shimmer: "shimmer 2s infinite linear",
+                lg: "0.5rem",
+                md: "0.375rem",
+                sm: "0.25rem",
             },
         },
     },
