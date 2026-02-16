@@ -9,7 +9,8 @@ const app = express();
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'https://squirtle-chords-production.up.railway.app'
+        'https://squirtle-chords-production.up.railway.app',
+        'https://endearing-caring-production-ab25.up.railway.app'
     ],
     credentials: true
 }));
