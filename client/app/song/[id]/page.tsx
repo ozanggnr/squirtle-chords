@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
-import { User, Calendar, Music, Type, ChevronUp, ChevronDown, ArrowLeft } from 'lucide-react';
+import { Music, ChevronUp, ChevronDown, ArrowLeft, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 import { ChordTransposer } from '@/utils/chordTransposer';
 import API_URL from '@/config/api';
@@ -29,6 +29,7 @@ export default function SongDetail() {
     const [loading, setLoading] = useState(true);
     const [transpose, setTranspose] = useState(0);
     const [displayContent, setDisplayContent] = useState('');
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         const fetchSong = async () => {
@@ -48,7 +49,6 @@ export default function SongDetail() {
         }
     }, [id]);
 
-    // Update content when transpose changes
     useEffect(() => {
         if (song?.content) {
             const transposed = ChordTransposer.transposeContent(song.content, transpose);
@@ -60,39 +60,51 @@ export default function SongDetail() {
         setTranspose(prev => prev + direction);
     };
 
-    const resetTranspose = () => {
-        setTranspose(0);
+    const handleCopy = async () => {
+        if (displayContent) {
+            await navigator.clipboard.writeText(displayContent);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
     };
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-96">
-                <div className="text-gray-400 text-lg">Loading song...</div>
+            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+                <div className="text-slate-400">Loading song...</div>
             </div>
         );
     }
 
     if (!song) {
         return (
-            <div className="flex items-center justify-center h-96">
-                <div className="text-gray-400 text-lg">Song not found.</div>
+            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+                <div className="text-slate-400">Song not found</div>
             </div>
         );
     }
 
-    // Parse content into lines and detect chord lines
     const renderContent = () => {
         const lines = displayContent.split('\n');
 
         return lines.map((line, index) => {
             const isChordLine = ChordTransposer.isChordLine(line);
+            const isSection = line.trim().startsWith('[') && line.trim().endsWith(']');
+
+            if (isSection) {
+                return (
+                    <div key={index} className="text-blue-400 font-bold text-lg mt-6 mb-3">
+                        {line}
+                    </div>
+                );
+            }
 
             return (
                 <div
                     key={index}
-                    className={`font-mono text-sm md:text-base leading-relaxed ${isChordLine
-                        ? 'text-blue-400 font-bold tracking-wide'
-                        : 'text-gray-300'
+                    className={`font-mono text-base leading-relaxed ${isChordLine
+                            ? 'text-blue-400 font-bold tracking-wider'
+                            : 'text-slate-300'
                         }`}
                 >
                     {line || '\u00A0'}
@@ -102,121 +114,121 @@ export default function SongDetail() {
     };
 
     return (
-        <div className="max-w-5xl mx-auto pb-12">
-            {/* Back Button */}
-            <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6 group"
-            >
-                <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                Back to Songs
-            </Link>
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+            {/* Header */}
+            <header className="border-b border-slate-800/50 bg-slate-950/50 backdrop-blur-xl sticky top-0 z-50">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
+                    >
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        Back to Songs
+                    </Link>
+                </div>
+            </header>
 
-            {/* Header with gradient background */}
-            <div className="relative mb-8 p-8 rounded-2xl bg-gradient-to-br from-gray-900 via-gray-900 to-blue-900/30 border border-gray-800 overflow-hidden">
-                {/* Glow effect */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-
-                <div className="relative z-10">
-                    <h1 className="text-5xl font-bold text-white mb-3 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                {/* Song Header */}
+                <div className="mb-8">
+                    <h1 className="text-5xl font-bold text-white mb-3">
                         {song.title}
                     </h1>
-                    <h2 className="text-3xl text-blue-400 font-medium mb-6">
+                    <p className="text-2xl text-blue-400 font-medium mb-6">
                         {song.artist}
-                    </h2>
+                    </p>
 
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                        <div className="flex items-center gap-2 bg-gray-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
-                            <Music size={16} />
-                            <span>{song.type}</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-gray-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
-                            <Type size={16} />
-                            <span>{song.language}</span>
-                        </div>
-                        {song.source === 'local' && song.createdBy ? (
-                            <div className="flex items-center gap-2 bg-gray-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
-                                <User size={16} />
-                                <span>by {song.createdBy.username}</span>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-2 bg-green-900/30 border border-green-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
-                                <User size={16} />
-                                <span className="text-green-400 font-medium">Songsterr</span>
-                            </div>
+                    <div className="flex flex-wrap gap-3">
+                        <span className="px-3 py-1.5 bg-slate-800/50 text-slate-300 rounded-lg border border-slate-700/50 text-sm">
+                            {song.language}
+                        </span>
+                        <span className="px-3 py-1.5 bg-slate-800/50 text-slate-300 rounded-lg border border-slate-700/50 text-sm">
+                            {song.type}
+                        </span>
+                        {song.source === 'songsterr' && (
+                            <span className="px-3 py-1.5 bg-green-500/10 text-green-400 rounded-lg border border-green-500/20 text-sm font-medium">
+                                Songsterr
+                            </span>
                         )}
-                        <div className="flex items-center gap-2 bg-gray-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
-                            <Calendar size={16} />
-                            <span>{new Date(song.createdAt).toLocaleDateString()}</span>
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Transpose Controls (sticky) */}
-            <div className="sticky top-4 z-20 mb-6 bg-gray-900/95 backdrop-blur-md border border-gray-800 rounded-xl p-4 shadow-2xl">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <span className="text-gray-400 font-medium text-sm">Transpose:</span>
-                        <button
-                            onClick={() => handleTranspose(-1)}
-                            className="p-2 bg-gray-800 hover:bg-blue-600 text-white rounded-lg transition-all hover:scale-105 active:scale-95"
-                            title="Transpose down"
-                        >
-                            <ChevronDown size={20} />
-                        </button>
-                        <div className="min-w-[80px] text-center">
-                            <span className="text-white font-bold text-lg">
-                                {transpose > 0 ? `+${transpose}` : transpose}
-                            </span>
-                            <span className="text-gray-500 text-xs block">semitones</span>
+                {/* Controls */}
+                <div className="sticky top-20 z-40 mb-6 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-5 shadow-xl">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <span className="text-sm font-medium text-slate-400">Transpose:</span>
+
+                            <button
+                                onClick={() => handleTranspose(-1)}
+                                className="w-10 h-10 bg-slate-800 hover:bg-blue-600 text-white rounded-lg transition-all hover:scale-105"
+                            >
+                                <ChevronDown className="w-5 h-5 mx-auto" />
+                            </button>
+
+                            <div className="min-w-[4rem] text-center">
+                                <div className="text-xl font-bold text-white">
+                                    {transpose > 0 ? `+${transpose}` : transpose}
+                                </div>
+                                <div className="text-xs text-slate-500">semitones</div>
+                            </div>
+
+                            <button
+                                onClick={() => handleTranspose(1)}
+                                className="w-10 h-10 bg-slate-800 hover:bg-blue-600 text-white rounded-lg transition-all hover:scale-105"
+                            >
+                                <ChevronUp className="w-5 h-5 mx-auto" />
+                            </button>
+
+                            {transpose !== 0 && (
+                                <button
+                                    onClick={() => setTranspose(0)}
+                                    className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm rounded-lg transition-colors"
+                                >
+                                    Reset
+                                </button>
+                            )}
                         </div>
+
                         <button
-                            onClick={() => handleTranspose(1)}
-                            className="p-2 bg-gray-800 hover:bg-blue-600 text-white rounded-lg transition-all hover:scale-105 active:scale-95"
-                            title="Transpose up"
+                            onClick={handleCopy}
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
                         >
-                            <ChevronUp size={20} />
+                            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                            {copied ? 'Copied!' : 'Copy'}
                         </button>
                     </div>
+                </div>
 
-                    {transpose !== 0 && (
-                        <button
-                            onClick={resetTranspose}
-                            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium rounded-lg transition-colors"
-                        >
-                            Reset
-                        </button>
+                {/* Song Content */}
+                <div className="bg-slate-900/50 border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
+                    {song.content ? (
+                        <div className="overflow-x-auto">
+                            <div className="min-w-max">
+                                {renderContent()}
+                            </div>
+                        </div>
+                    ) : song.source === 'songsterr' ? (
+                        <div className="text-center py-20">
+                            <Music className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                            <p className="text-slate-400 mb-6">This song is from Songsterr</p>
+                            <a
+                                href={`https://www.songsterr.com/a/wsa/song-s${song.externalId}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-semibold rounded-xl transition-all hover:scale-105"
+                            >
+                                <Music className="w-5 h-5" />
+                                View on Songsterr
+                            </a>
+                        </div>
+                    ) : (
+                        <div className="text-center py-20 text-slate-500">
+                            No content available
+                        </div>
                     )}
                 </div>
-            </div>
-
-            {/* Song Content */}
-            <div className="bg-gradient-to-br from-gray-900/80 to-gray-900/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-gray-800 overflow-x-auto shadow-2xl">
-                {song.content ? (
-                    <div className="chord-sheet">
-                        {renderContent()}
-                    </div>
-                ) : song.source === 'songsterr' ? (
-                    <div className="text-center py-16">
-                        <Music className="mx-auto mb-4 text-gray-600" size={64} />
-                        <p className="text-gray-400 mb-6 text-lg">This song is from Songsterr.</p>
-                        <a
-                            href={`https://www.songsterr.com/a/wsa/song-s${song.externalId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-gradient-to-r from-green-700 to-green-600 hover:from-green-600 hover:to-green-500 text-white font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-green-900/50"
-                        >
-                            <Music size={20} />
-                            View Tabs on Songsterr
-                        </a>
-                    </div>
-                ) : (
-                    <div className="text-center py-16 text-gray-500">
-                        No content available
-                    </div>
-                )}
-            </div>
+            </main>
         </div>
     );
 }
