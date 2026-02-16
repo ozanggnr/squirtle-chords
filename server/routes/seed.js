@@ -1,21 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const seedDatabase = require('../seed');
 
-// POST /api/seed - Seed the database with sample data
+// POST /api/seed - Seed the database with sample data  
+// No auth required for initial setup
 router.post('/', async (req, res) => {
     try {
-        // Simple protection - only allow if secret key is provided
-        const { secret } = req.body;
-
-        if (secret !== process.env.SEED_SECRET) {
-            return res.status(403).json({ error: 'Unauthorized' });
-        }
-
         console.log('[SEED API] Starting database seeding...');
 
         // Import required dependencies
-        const mongoose = require('mongoose');
         const Song = require('../models/Song');
 
         const sampleSongs = [
