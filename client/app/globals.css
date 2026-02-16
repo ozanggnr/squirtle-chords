@@ -20,10 +20,6 @@
     --blue-600: 37, 99, 235;
   }
 
-  * {
-    @apply border-gray-800;
-  }
-
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     color: rgb(var(--foreground-rgb));
