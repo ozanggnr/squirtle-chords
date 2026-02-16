@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js
+client/.next/
+client/out/
+client/build/
+
+# Production
+dist/
+build/
+
+# Uploads (keep directory but not contents)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.iml
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.tgz
+.cache/
+
+# Brain artifacts (optional - comment out if you want to include)
+.gemini/
