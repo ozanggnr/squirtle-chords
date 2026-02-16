@@ -38,8 +38,7 @@ const SongSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: function () { return this.source === 'local'; }
+        ref: 'User'
     },
     createdAt: {
         type: Date,
