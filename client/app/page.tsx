@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
@@ -17,7 +17,7 @@ interface Song {
     tabTypes?: string[];
 }
 
-export default function Home() {
+function HomePage() {
     const [songs, setSongs] = useState<Song[]>([]);
     const [loading, setLoading] = useState(true);
     const searchParams = useSearchParams();
@@ -126,5 +126,13 @@ export default function Home() {
                 </div>
             )}
         </div>
+    );
+}
+
+export default function Home() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="text-gray-400 text-lg">Loading...</div></div>}>
+            <HomePage />
+        </Suspense>
     );
 }
