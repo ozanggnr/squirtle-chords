@@ -5,8 +5,14 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware - CORS Configuration
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'https://squirtle-chords-production.up.railway.app'
+    ],
+    credentials: true
+}));
 app.use(express.json());
 
 // Database Connection

@@ -16,7 +16,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="h-16 bg-black/50 backdrop-blur-md border-b border-gray-800 flex items-center justify-between px-8 sticky top-0 z-40 ml-64">
+        <header className="h-16 bg-black/50 backdrop-blur-md border-b border-gray-800 flex items-center justify-between px-8 sticky top-0 z-40">
             <form onSubmit={handleSearch} className="flex-1 max-w-xl relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <input
