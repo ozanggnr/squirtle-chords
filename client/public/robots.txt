@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://chordflow.app/sitemap.xml
+
+# Disallow admin/private areas (if added in future)
+Disallow: /admin/
+Disallow: /api/
+
+# Crawl delay (be nice to crawlers)
+Crawl-delay: 1

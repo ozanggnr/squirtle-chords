@@ -1,244 +1,331 @@
-# Squirtle Chords 🐢🎸
+# 🎸 ChordFlow - Professional Guitar Chord & Tab Viewer
 
-A modern, free platform for guitar chords and tabs with document upload, chord transposition, and external API integration.
+<div align="center">
 
-![Platform Preview](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
-![Node.js](https://img.shields.io/badge/Node.js-Express-green?style=flat-square&logo=node.js)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-green?style=flat-square&logo=mongodb)
+![ChordFlow](https://img.shields.io/badge/ChordFlow-v1.0-8b5cf6?style=for-the-badge)
+![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js)
 
-## 🌟 Features
+**A beautiful, feature-rich guitar chord viewer with transpose, auto-scroll, and PWA support.**
 
-- **📚 Song Library**: Browse thousands of chords and tabs
-- **🔍 Smart Search**: Full-text search with Songsterr API integration
-- **📄 Document Upload**: Upload PDF/DOCX files and auto-extract chords
-- **🎵 Chord Transposer**: Transpose songs to any key in real-time
-- **🎨 Premium UI**: Modern dark theme with smooth animations
-- **🔐 User Authentication**: JWT-based auth system
-- **🌐 Multi-language**: Turkish and English songs
+[Features](#-features) • [Quick Start](#-quick-start) • [Usage](#-usage) • [Tech Stack](#-tech-stack)
+
+</div>
+
+---
+
+## ✨ Features
+
+### 🎵 Core Features
+- **📋 Chord Library** - Browse and search guitar chords and tabs
+- **➕ Manual Entry** - Add your own songs with custom chords
+- **📁 File Upload** - Upload PDF/DOCX chord sheets (simplified parsing)
+- **❤️ Favorites** - Save your favorite songs locally
+- **🔍 Smart Search** - Find songs by title or artist
+
+### 🎛️ Professional Tools
+- **🎚️ Transpose** - Shift chords up/down by semitones (-6 to +6)
+- **📐 Capo Calculator** - Automatic capo fret recommendations
+- **⏩ Auto-Scroll** - Hands-free scrolling with adjustable speed (1x-5x)
+- **🔤 Sorting** - Organize by title, artist, or date (A-Z / Z-A)
+- **💡 Syntax Highlighting** - Color-coded chord display
+
+### 🎨 User Experience
+- **🌙 Dark/Light Mode** - Premium dark theme + light mode toggle
+- **📱 PWA Support** - Install as app, works offline
+- **✨ Smooth Animations** - Framer Motion powered UI
+- **🎯 Clean Design** - Glassmorphism & modern aesthetics
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+ and npm
-- MongoDB (local or MongoDB Atlas)
 - Git
 
-### 1. Clone Repository
-```bash
+### One-Click Startup (Windows)
+```powershell
+# Clone repository
 git clone https://github.com/ozanggnr/squirtle-chords.git
 cd squirtle-chords
+
+# Install dependencies
+cd server && npm install
+cd ../client && npm install
+cd ..
+
+# Start app (one command!)
+.\start.ps1
 ```
 
-### 2. Backend Setup
+The app will automatically:
+1. Start backend server (port 3000)
+2. Start frontend server (port 5173)
+3. Open browser to http://localhost:5173
+
+### Manual Startup
 ```bash
+# Terminal 1 - Backend
 cd server
 npm install
-
-# Create .env file
-echo "MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key_here
-PORT=5000" > .env
-
-# Start server
 npm run dev
-```
 
-### 3. Frontend Setup
-```bash
-cd ../client
+# Terminal 2 - Frontend
+cd client
 npm install
-
-# Start development server
 npm run dev
 ```
 
-### 4. Access Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000
-
-## 📁 Project Structure
-
-```
-squirtle-chords/
-├── server/              # Express.js backend
-│   ├── config/          # Database config
-│   ├── controllers/     # Route controllers
-│   ├── models/          # Mongoose schemas
-│   ├── routes/          # API routes
-│   ├── services/        # Business logic (API, file parsing)
-│   ├── middleware/      # Auth middleware
-│   └── uploads/         # Temp file storage
-├── client/              # Next.js frontend
-│   ├── app/             # App router pages
-│   ├── components/      # React components
-│   ├── utils/           # Helper utilities
-│   └── public/          # Static assets
-└── README.md
-```
-
-## 🔧 Environment Variables
-
-### Backend (`server/.env`)
-```env
-MONGO_URI=mongodb://localhost:27017/squirtle-chords
-# Or for MongoDB Atlas:
-# MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/squirtle-chords
-
-JWT_SECRET=your_super_secret_jwt_key_here
-PORT=5000
-```
-
-### Frontend (Optional)
-Create `client/.env.local` if you need custom API URL:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-## 📦 Core Dependencies
-
-### Backend
-- **express** - Web framework
-- **mongoose** - MongoDB ODM
-- **jsonwebtoken** - Authentication
-- **multer** - File uploads
-- **pdf-parse** - PDF extraction
-- **mammoth** - DOCX extraction
-- **axios** - HTTP client for external APIs
-
-### Frontend
-- **Next.js 14** - React framework
-- **TailwindCSS** - Styling
-- **axios** - HTTP client
-- **lucide-react** - Icons
-
-## 🎯 Key Features Detail
-
-### 1. Document Upload & Parsing
-Upload PDF or DOCX files containing song chords. The system automatically:
-- Extracts text content
-- Detects chord patterns
-- Suggests title and artist
-- Allows editing before publishing
-
-### 2. Chord Transposition
-Real-time chord transposition with:
-- +/- semitone controls
-- Chord notation mapping (C → C# → D)
-- Visual highlighting (chords in blue, lyrics in gray)
-
-### 3. External API Integration
-Songsterr API integration for expanded song library:
-- Searches Songsterr when local results are limited
-- Caches external songs locally
-- Visual badges to indicate source
-
-### 4. Premium UI/UX
-- Custom turtle mascot character
-- Gradient backgrounds and glow effects
-- Smooth animations and transitions
-- Responsive mobile design
-
-## 🌐 Deployment Guide
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions covering:
-- Vercel (Frontend)
-- Railway/Render (Backend)
-- MongoDB Atlas (Database)
-- Environment configuration
-- Custom domain setup
-
-## 📝 API Documentation
-
-### Authentication
-```bash
-# Register
-POST /api/auth/register
-Body: { username, email, password }
-
-# Login
-POST /api/auth/login
-Body: { email, password }
-Returns: { token, user }
-```
-
-### Songs
-```bash
-# Get all songs (with filters)
-GET /api/songs?search=wonderwall&language=English
-
-# Get single song
-GET /api/songs/:id
-
-# Create song (requires auth)
-POST /api/songs
-Headers: { Authorization: "Bearer <token>" }
-Body: { title, artist, language, type, content }
-```
-
-### Upload
-```bash
-# Upload document (requires auth)
-POST /api/upload
-Headers: { Authorization: "Bearer <token>" }
-Body: FormData with 'document' file
-```
-
-## 🔐 Security Features
-
-- JWT token authentication
-- Password hashing with bcrypt
-- File type validation
-- File size limits (5MB)
-- CORS configuration
-- Protected routes
-
-## 🛠️ Development Scripts
-
-### Backend
-```bash
-npm run dev      # Start with nodemon
-npm start        # Production start
-```
-
-### Frontend
-```bash
-npm run dev      # Development server
-npm run build    # Production build
-npm start        # Production server
-npm run lint     # Run ESLint
-```
-
-## 📊 Database Schema
-
-### User
-- username, email, password (hashed)
-- timestamps
-
-### Song
-- title, artist, language, type
-- content (chord/tab text)
-- source (local/songsterr)
-- externalId, tabTypes
-- createdBy (User reference)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-MIT License - feel free to use this project for learning or commercial purposes.
-
-## 🙏 Acknowledgments
-
-- Songsterr API for external song data
-- Next.js and Express.js communities
-- All open-source contributors
-
-## 📧 Support
-
-For issues or questions, please open an issue on GitHub.
+Then open http://localhost:5173
 
 ---
 
-Made with ❤️ by [ozanggnr](https://github.com/ozanggnr)
+## 📖 Usage
+
+### Adding Songs
+
+#### Manual Entry
+1. Click **"Add Song"** button
+2. Fill in title, artist, and chords
+3. Use `[CHORDS]` marker for chord lines
+4. Click **"Add Song"**
+
+**Example Format:**
+```
+[Verse 1]
+[CHORDS]    G    D    Em   C
+I found a love for me
+[CHORDS]    G    D    Em   C
+Darling, just dive right in
+```
+
+#### File Upload
+1. Click **"Upload"** button
+2. Select PDF or DOCX file
+3. Songs are automatically parsed and added
+
+### Viewing & Playing Songs
+
+#### Transpose Chords
+1. Open any song
+2. Click **+** or **−** buttons to transpose
+3. Chords update instantly in real-time
+4. See capo position (e.g., "Capo: Fret 2")
+
+#### Auto-Scroll
+1. Open a song
+2. Click **▶ Auto-scroll** button
+3. Adjust speed slider (1x - 5x)
+4. Click **⏸ Pause** to stop
+
+#### Organize Songs
+1. On homepage, use **Sort by** dropdown
+2. Select: Title, Artist, or Date Added
+3. Toggle **↑ A-Z** / **↓ Z-A** for order
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool & dev server
+- **Tailwind CSS** - Styling
+- **Framer Motion** - Animations
+- **React Router** - Navigation
+- **Axios** - HTTP client
+
+### Backend
+- **Node.js** - Runtime
+- **Express** - Web framework
+- **CORS** - Cross-origin support
+- **Multer** - File uploads
+- **Rate Limiting** - Security
+- **DOMPurify** - Input sanitization
+
+### Storage
+- **In-Memory** - Fast development mode
+- **LocalStorage** - Favorites persistence
+
+---
+
+## 📂 Project Structure
+
+```
+squirtle-chords/
+├── client/                 # Frontend (React + TypeScript)
+│   ├── public/            
+│   │   ├── sw.js          # Service worker for PWA
+│   │   └── manifest.json  # PWA manifest
+│   ├── src/
+│   │   ├── components/    # Reusable UI components
+│   │   │   ├── ChordDisplay.tsx    # Main chord viewer
+│   │   │   ├── SongCard.tsx        # Song grid item
+│   │   │   └── ...
+│   │   ├── pages/         # Route pages
+│   │   │   ├── HomePage.tsx        # Main song list
+│   │   │   ├── SongDetailPage.tsx  # Song viewer
+│   │   │   └── ...
+│   │   ├── hooks/         # Custom React hooks
+│   │   │   ├── useAutoScroll.ts    # Auto-scroll logic
+│   │   │   ├── useFavorites.ts     # Favorites management
+│   │   │   └── usePWA.ts           # PWA install
+│   │   ├── utils/         # Utilities
+│   │   │   ├── transposeUtils.ts   # Chord transposition
+│   │   │   └── chordUtils.ts       # Chord parsing
+│   │   └── services/      # API services
+│   │       └── api.ts              # Backend API calls
+│   └── package.json
+│
+├── server/                # Backend (Node + Express)
+│   ├── src/
+│   │   ├── controllers/   # Request handlers
+│   │   ├── routes/        # API routes
+│   │   ├── services/      # Business logic
+│   │   │   └── storageService.js   # In-memory storage
+│   │   └── middleware/    # Express middleware
+│   ├── server.js          # Entry point
+│   └── package.json
+│
+├── start.ps1              # One-click startup script
+└── README.md              # This file
+```
+
+---
+
+## 🎯 Key Features Explained
+
+### Transpose & Capo
+
+**How it works:**
+- Transpose shifts all chords by semitones
+- Positive transpose = capo up
+- Algorithm handles complex chords (Gmaj7, Dsus4, etc.)
+
+**Example:**
+```
+Original:     C    G    Am   F
+Transpose +2: D    A    Bm   G
+Display:      "Capo: Fret 2"
+```
+
+### Auto-Scroll
+
+**Controls:**
+- **Speed**: 1x (slow) → 5x (fast)
+- **Smooth**: 50ms intervals for fluid motion
+- **Auto-stop**: Pauses at page bottom
+
+**Use case**: Perfect for hands-free practice while playing guitar
+
+### Sorting
+
+**Options:**
+- **Title**: Alphabetical by song name
+- **Artist**: Alphabetical by artist name  
+- **Date**: Chronological by upload date
+- **Order**: Ascending (A→Z) or Descending (Z→A)
+
+---
+
+## 🔧 Development
+
+### Environment Variables
+
+**Backend** (`.env`):
+```env
+NODE_ENV=development
+PORT=3000
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+```
+
+**Frontend** (`.env.production`):
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### Available Scripts
+
+**Backend:**
+```bash
+npm run dev        # Start dev server with nodemon
+npm start          # Start production server
+```
+
+**Frontend:**
+```bash
+npm run dev        # Start Vite dev server
+npm run build      # Build for production
+npm run preview    # Preview production build
+```
+
+### Adding New Features
+
+1. **Frontend components**: Add to `client/src/components/`
+2. **API endpoints**: Add to `server/src/routes/`
+3. **Business logic**: Add to `server/src/services/`
+4. **Utilities**: Add to `client/src/utils/`
+
+---
+
+## 📱 PWA Installation
+
+ChordFlow works as a Progressive Web App:
+
+1. **Desktop**: Click install icon in address bar
+2. **Mobile**: "Add to Home Screen" from browser menu
+3. **Offline**: Service worker caches content
+
+---
+
+## 🎨 Design Philosophy
+
+- **Premium aesthetics** with glassmorphism and neon accents
+- **Smooth animations** for delightful user experience
+- **Mobile-first** responsive design
+- **Accessibility** built-in (ARIA labels, keyboard nav)
+
+---
+
+## 🐛 Known Limitations
+
+- **File parsing**: Simplified (best with manual entry)
+- **Database**: In-memory only (data resets on server restart)
+- **Max songs**: No pagination limit enforced
+
+### Future Enhancements
+- 🗄️ Persistent database (SQLite/MongoDB)
+- 🎼 Advanced PDF parsing
+- 🎸 Chord diagrams
+- 🎵 Audio playback integration
+- 👥 User accounts & sharing
+
+---
+
+## 📄 License
+
+MIT License - feel free to use for any purpose!
+
+---
+
+## 🙏 Credits
+
+Built with ❤️ using modern web technologies.
+
+**Key Libraries:**
+- React, TypeScript, Vite
+- Tailwind CSS, Framer Motion
+- Express, Node.js
+
+---
+
+<div align="center">
+
+**[⭐ Star this repo](https://github.com/ozanggnr/squirtle-chords)** if you find it useful!
+
+Made with 🎸 by [ozanggnr](https://github.com/ozanggnr)
+
+</div>

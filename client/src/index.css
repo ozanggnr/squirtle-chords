@@ -1,0 +1,237 @@
+/* Import Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background Colors - Deep Space Theme */
+    --bg-primary: 10 10 15;
+    /* #0a0a0f */
+    --bg-secondary: 19 19 26;
+    /* #13131a */
+    --bg-tertiary: 26 26 36;
+    /* #1a1a24 */
+
+    /* Glassmorphism */
+    --glass-bg: rgba(26, 26, 36, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* Text Colors */
+    --text-primary: 229 231 235;
+    /* #e5e7eb */
+    --text-secondary: 156 163 175;
+    /* #9ca3af */
+    --text-muted: 107 114 128;
+    /* #6b7280 */
+
+    /* Accent Colors - Purple & Cyan Neon */
+    --accent-primary: 139 92 246;
+    /* #8b5cf6 - Purple */
+    --accent-secondary: 6 182 212;
+    /* #06b6d4 - Cyan */
+    --accent-hover: 167 139 250;
+    /* Lighter purple */
+
+    /* Semantic Colors */
+    --success: 16 185 129;
+    /* #10b981 */
+    --error: 239 68 68;
+    /* #ef4444 */
+    --warning: 245 158 11;
+    /* #f59e0b */
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+
+    /* Shadows */
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+    --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+}
+
+@layer base {
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))];
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold;
+  }
+
+  /* Animated gradient background */
+  .gradient-bg {
+    background: linear-gradient(135deg,
+        rgb(var(--bg-primary)) 0%,
+        rgb(var(--bg-secondary)) 50%,
+        rgb(var(--bg-tertiary)) 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Glassmorphism utility */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Neon glow effects */
+  .glow-purple {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg,
+        rgb(var(--accent-primary)) 0%,
+        rgb(var(--accent-secondary)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Monospace for chords */
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--bg-secondary));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--accent-primary));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--accent-hover));
+  }
+
+  /* Floating particles background */
+  .particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Shimmer loading animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .shimmer {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(to right,
+        rgba(26, 26, 36, 0.3) 0%,
+        rgba(139, 92, 246, 0.1) 50%,
+        rgba(26, 26, 36, 0.3) 100%);
+    background-size: 1000px 100%;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    outline: 2px solid rgb(var(--accent-primary));
+    outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(139, 92, 246, 0.3);
+    color: rgb(var(--text-primary));
+  }
+}
+
+@layer utilities {
+
+  /* Text utilities */
+  .text-gradient {
+    @apply gradient-text;
+  }
+
+  /* Spacing utilities matching design system */
+  .space-section {
+    @apply py-[var(--spacing-3xl)];
+  }
+
+  /* Container with max width */
+  .container-custom {
+    @apply mx-auto px-4 max-w-[1400px];
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply scale-[1.02] -translate-y-1;
+  }
+}

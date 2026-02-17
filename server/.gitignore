@@ -1,3 +1,6 @@
-# uploads/
-*.pdf
-*.docx
+node_modules
+.env
+database.db
+uploads/
+*.log
+.DS_Store

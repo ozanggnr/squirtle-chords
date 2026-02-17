@@ -1,37 +1,22 @@
-# Dependencies
+# Ignore node modules
 node_modules/
-.pnp
-.pnp.js
 
 # Environment variables
 .env
 .env.local
 .env.production
-.env.development.local
-.env.test.local
-.env.production.local
 
-# Next.js
-client/.next/
-client/out/
+# Build outputs
+client/dist/
 client/build/
-
-# Production
-dist/
-build/
-
-# Uploads (keep directory but not contents)
-server/uploads/*
-!server/uploads/.gitkeep
+server/build/
 
 # Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
 *.log
+npm-debug.log*
+logs/
 
-# OS Files
+# OS files
 .DS_Store
 Thumbs.db
 
@@ -40,15 +25,19 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-*.iml
 
-# Testing
-coverage/
-.nyc_output/
-
-# Misc
-*.tgz
+# Cache
 .cache/
+*.cache
+client/.vite/
 
-# Brain artifacts (optional - comment out if you want to include)
-.gemini/
+# Temporary files
+*.tmp
+tmp/
+
+# Database (if added later)
+*.db
+*.sqlite
+
+# Uploads (user files)
+server/uploads/
